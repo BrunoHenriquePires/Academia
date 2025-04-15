@@ -1,0 +1,57 @@
+CREATE DATABASE academia;
+USE academia;
+
+CREATE TABLE Plano (
+    IdPlano INT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Modalidade VARCHAR(50),
+    Fidelidade INT,
+    Preco DECIMAL(10, 2),
+    Taxa DECIMAL(10, 2)
+);
+
+CREATE TABLE Aluno (
+    IdAluno INT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Senha VARCHAR(50),
+    Telefone VARCHAR(20),
+    Email VARCHAR(100),
+    IdPlano INT,
+    FOREIGN KEY (IdPlano) REFERENCES Plano(IdPlano)
+);
+
+CREATE TABLE Pagamento (
+    IdPagamento INT PRIMARY KEY,
+    FormaPagamento VARCHAR(50),
+    IdAluno INT,
+    Valor DECIMAL(10, 2),
+    DataPagamento DATE,
+    FOREIGN KEY (IdAluno) REFERENCES Aluno(IdAluno)
+);
+
+CREATE TABLE Funcionario (
+    IdFuncionario INT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Telefone VARCHAR(20),
+    Senha VARCHAR(50),
+    Email VARCHAR(100),
+    Salario DECIMAL(10, 2)
+);
+
+
+CREATE TABLE Treino (
+    IdTreino INT PRIMARY KEY,
+    Tipo VARCHAR(50),
+    Horario TIME,
+    Max_Alunos INT,
+    IdFuncionario INT,
+    FOREIGN KEY (IdFuncionario) REFERENCES Funcionario(IdFuncionario)
+);
+
+CREATE TABLE Matricula (
+    IdAluno INT,
+    IdTreino INT,
+    PRIMARY KEY (IdAluno, IdTreino),
+    FOREIGN KEY (IdAluno) REFERENCES Aluno(IdAluno),
+    FOREIGN KEY (IdTreino) REFERENCES Treino(IdTreino)
+);
